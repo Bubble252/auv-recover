@@ -1,0 +1,24 @@
+# settled_容错项目规则
+
+本仓库是独立 Git 仓库 `/home/bubble/水下机器人/settled_容错`，默认分支 `main`，
+当前不配置 remote，只承载容错、安全监督与降级策略。
+
+## 边界
+
+- 不修改其他仓库的训练、评价、reward、termination 或 artifact。
+- 安全相关结论必须保留失败样本、触发条件和可复现命令。
+- 新增 Goal 使用 `doc/goals/GOAL_TEMPLATE.md`，并包含 Research Contract。
+- 与全局/局部规划器的接口以共享契约和显式版本为准，不直接导入其他仓库源码。
+
+## 实验纪律
+
+- 不把 smoke 写成正式结论；不把 `INVALID` 写成 `FAIL` 或 `PASS`。
+- 触发 hard blocker 时按根目录 `AGENTS.md` 进入 autoresearch loop。
+- 训练、评价和 artifact 规则沿用目标实验仓库的契约；本仓库不复制其历史数据。
+
+## Git
+
+- 禁止 `git add -A`；只添加本次相关路径。
+- 提交前运行 `git diff --cached --check`。
+- 不提交 `.venv/`、artifact、checkpoint、日志、缓存和大 PDF。
+- 不自动 commit / push；push 必须由用户明确确认。
