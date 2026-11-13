@@ -10,6 +10,16 @@
 - 新增 Goal 使用 `doc/goals/GOAL_TEMPLATE.md`，并包含 Research Contract。
 - 与全局/局部规划器的接口以共享契约和显式版本为准，不直接导入其他仓库源码。
 
+## 治理入口
+
+- 工作区规则：`/home/bubble/水下机器人/AGENTS.md`；
+- canonical 代码规范：`/home/bubble/水下机器人/总协调/doc/governance/CODE_STYLE.md`；
+- 接口与单位契约：`/home/bubble/水下机器人/总协调/doc/governance/CODE_INTERFACE_CONTRACT.md`；
+- Goal / matrix / ledger schema：`/home/bubble/水下机器人/总协调/configs/governance/`。
+
+本仓库当前没有正式 Goal 或 experiment matrix；新增时使用 canonical 模板和 schema，
+不复制其他仓库的历史实验契约。
+
 ## 实验纪律
 
 - 不把 smoke 写成正式结论；不把 `INVALID` 写成 `FAIL` 或 `PASS`。
