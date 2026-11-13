@@ -1,6 +1,6 @@
 # auv-fault Refactor Baseline
 
-**状态**：`REF_FAULT_BOOTSTRAP`<br>
+**状态**：`REF_FAULT_COMPLETE`<br>
 **仓库**：`settled_容错`<br>
 **基线 commit**：`571449a`<br>
 **日期**：2026-11-13
@@ -11,11 +11,17 @@
 research 空结构。因此不存在可回归的算法测试，也没有历史 artifact 或公共 Python API。
 REF-FAULT 不是对旧实现的改写，而是按 G03 Step 4 建立一个最小、可测试的契约层。
 
+基线之后新增了 `src/auv_fault/` 包和 17 个测试；原 bootstrap commit 仍是行为比较
+起点，候选回滚点是 `571449a`。
+
 ## 2. 运行环境
 
 ```bash
 cd /home/bubble/水下机器人/settled_容错/.worktrees/ref-fault-20261113
-/home/bubble/水下机器人/.venv/bin/python -m pytest -q tests
+uv venv .venv
+uv pip install --python .venv/bin/python -e /home/bubble/水下机器人/settled_共享基础
+uv pip install --python .venv/bin/python -e '.[dev]'
+.venv/bin/python -m pytest -q tests
 ```
 
 `auv-core` 使用工作区根环境中的已安装版本；不在本仓库复制 core 源码，也不通过
@@ -25,9 +31,9 @@ cd /home/bubble/水下机器人/settled_容错/.worktrees/ref-fault-20261113
 
 | 检查 | 命令 | 基线 |
 |---|---|---|
-| pytest | `/home/bubble/水下机器人/.venv/bin/python -m pytest -q tests` | 无测试文件（bootstrap） |
-| ruff | `/home/bubble/水下机器人/.venv/bin/python -m ruff check src tests` | 无源码（bootstrap） |
-| mypy | `/home/bubble/水下机器人/.venv/bin/python -m mypy` | 无源码（bootstrap） |
+| pytest | `.venv/bin/python -m pytest -q tests` | bootstrap 无测试；完成后 `17 passed` |
+| ruff | `.venv/bin/python -m ruff check src tests` | bootstrap 无源码；完成后 PASS |
+| mypy | `.venv/bin/python -m mypy` | bootstrap 无源码；完成后 7 files PASS |
 | shape | `总协调/scripts/check_code_shape.py --root . --check` | 无源码（bootstrap） |
 | dependency | `scripts/check_repo_dependencies.py --root . --check` | PASS |
 

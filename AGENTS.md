@@ -9,6 +9,22 @@
 - 安全相关结论必须保留失败样本、触发条件和可复现命令。
 - 新增 Goal 使用 `doc/goals/GOAL_TEMPLATE.md`，并包含 Research Contract。
 - 与全局/局部规划器的接口以共享契约和显式版本为准，不直接导入其他仓库源码。
+- 运行时代码只放在 `src/auv_fault/`；只依赖标准库、NumPy 和已安装的 `auv-core`。
+- 不导入 `auv_planner`、`auv_local`、`auv_lowlevel` 或 `auv_rl`。
+
+## 代码与测试
+
+- 故障信号、检测/注入/降级接口在 `src/auv_fault/interfaces.py`；
+- 安全监督组合在 `src/auv_fault/supervisor.py`；
+- 模块边界以 `doc/refactor/MODULE_MAP.md` 为准；
+- 本地验证使用仓库自己的 `.venv`：
+
+```bash
+.venv/bin/python -m pytest -q tests
+.venv/bin/python -m ruff check src tests
+.venv/bin/python -m ruff format --check src tests
+.venv/bin/python -m mypy
+```
 
 ## 实验纪律
 
