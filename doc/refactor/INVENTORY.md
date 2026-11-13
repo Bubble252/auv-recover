@@ -35,3 +35,29 @@
 - 不读取历史 Goal artifact；
 - 不定义未经验证的故障分类枚举；
 - 不新增与 `SafetyFilter` 重复的接口。
+
+## 4. G03 最终验证与 G04 交接
+
+最终验证：
+
+| 检查 | 结果 |
+|---|---|
+| pytest | `17 passed` |
+| ruff | PASS |
+| format | 7 files already formatted |
+| mypy | 7 source files PASS |
+| shape | `0 new / 0 suppressed` |
+| dependency | PASS |
+
+| 级别 | 候选 | 证伪条件 | 边界 |
+|---|---|---|---|
+| L0 | 对候选 diff 运行 ruff import 排序/format | 非格式 diff、lint 失败或测试回退 | 可在 shadow 后自动写入 |
+| L1 | 只有在出现第二个真实实现时，才把共同调用顺序抽成无状态组合 helper | 只有一个实现、helper 增加转发层或改变 detector/filter 调用顺序 | 人工批准，禁止提前造抽象 |
+
+禁止自动修改：`FaultSignal` 公共字段、三个 Protocol 签名、`SafetySupervisor`
+调用顺序、`auv_core` 契约、故障分类和 severity 语义。新增具体故障目录必须先有
+真实场景、测试和独立 Goal。
+
+允许修改目录是 `src/auv_fault/`、`tests/`、`doc/refactor/`；禁止 `artifacts/`、
+`outputs/`、`checkpoints/`、历史 Goal 数据和外部仿真源码。G04 shadow 只读，
+不得自动扩大公共 API。
